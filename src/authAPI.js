@@ -1,8 +1,13 @@
 import axios from "axios";
 
+const baseUrl = "https://jportal.onrender.com";
+
 export const login = async (credentials) => {
   try {
-    const response = await axios.post("/api/v1/students/login", credentials);
+    const response = await axios.post(
+      baseUrl + "/api/v1/students/login",
+      credentials
+    );
     return response.data;
   } catch (error) {
     throw error.response.data.message;
@@ -11,7 +16,10 @@ export const login = async (credentials) => {
 
 export const signup = async (userData) => {
   try {
-    const response = await axios.post("/api/v1/students/signin", userData);
+    const response = await axios.post(
+      baseUrl + "/api/v1/students/signin",
+      userData
+    );
     return response.data;
   } catch (error) {
     throw error.response.data.message;
@@ -20,7 +28,7 @@ export const signup = async (userData) => {
 
 export const signOut = async () => {
   try {
-    const response = await axios.get("/api/v1/students/logout", {
+    const response = await axios.get(baseUrl + "/api/v1/students/logout", {
       withCredentials: true,
     });
     if (response.status === 200) {
@@ -52,10 +60,10 @@ export const getAllStudents = async (str) => {
     let response;
     // If no query string provided, fetch all students
     if (!queryString) {
-      response = await axios.get("/api/v1/students/getAllStudents");
+      response = await axios.get(baseUrl + "/api/v1/students/getAllStudents");
     } else {
       response = await axios.get(
-        `/api/v1/students/getAllStudents?${queryString}`
+        baseUrl + `/api/v1/students/getAllStudents?${queryString}`
       );
     }
     return response.data;
@@ -66,11 +74,15 @@ export const getAllStudents = async (str) => {
 
 export const updateStudent = async (formData, token) => {
   try {
-    const response = await axios.patch("/api/v1/students/updateMe", formData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.patch(
+      baseUrl + "/api/v1/students/updateMe",
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     throw error.response.data.message;
